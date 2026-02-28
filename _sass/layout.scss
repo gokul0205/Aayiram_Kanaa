@@ -230,18 +230,20 @@ body {
         }
 
         // Tags / categories pages
-        .tag-cloud-item {
+        .tags-cloud .tag-cloud-item {
             background: rgba(255, 255, 255, 0.85);
             border-color: rgba(0, 180, 170, 0.18);
             color: $lm-text-secondary;
         }
 
-        .tag-cloud-item:hover {
+        .tags-cloud .tag-cloud-item:hover {
             color: $accent;
+            background: rgba(0, 180, 170, 0.08);
         }
 
-        .tag-count {
+        .tags-cloud .tag-count {
             color: $lm-text-secondary;
+            background: rgba(0, 180, 170, 0.1);
         }
 
         .code-block pre {

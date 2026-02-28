@@ -1,6 +1,6 @@
 title: "Aayiram Kanaa"
-tagline: "Games · Anime · Data Engineering · Code"
-description: "A blog about games, anime, data engineering, and building cool things"
+tagline: "Life · Anime · Data Engineering · Code"
+description: "A blog about life, anime, data engineering, and building cool things"
 url: ""
 baseurl: ""
 
@@ -13,12 +13,12 @@ author:
 
 # Homepage Hero (configurable — edit here, not in HTML)
 hero:
-  heading_line1: "Games · Anime ·"
+  heading_line1: "Life · Anime ·"
   heading_accent: "Data"
   heading_line2: "· Code"
   subtitle: "A thousand dreams, one blog."
-  icon: "fa-solid fa-gamepad"
-  image: "/assets/img/hero.jpg"
+  icon: "fa-solid fa-newspaper"
+  image: "/assets/img/hero.png"
   image_alt: "Coding and coffee — hero illustration"
 
 lang: en
