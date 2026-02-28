@@ -1,33 +1,32 @@
 ---
 layout: page
 title: "About"
-date: 2026-01-01
+permalink: /about/
 ---
 
-## Hi, I'm Alex R. 👋
+## Hi there! 👋
 
-I'm a software engineer and writer focused on modern web development, AI systems, and developer tooling.
+Welcome to **Aayiram Kanaa** — a blog about games, anime, data engineering, and everything in-between.
 
-## What I Write About
+## What You'll Find Here
 
-- **Agentic AI** — LLM orchestration, multi-agent systems, RAG pipelines
-- **Modern CSS** — Glassmorphism, Bento Grid, Container Queries
-- **JavaScript** — Full-stack patterns, AI frameworks, performance
-- **DevOps** — CI/CD, infrastructure automation, self-healing systems
+- **Gaming** — Reviews, walkthroughs, and indie game discoveries
+- **Anime** — Series breakdowns, seasonal picks, and hidden gems
+- **Data Engineering** — Pipelines, lakehouse architecture, real-time streaming
+- **AI & ML** — LLM orchestration, RAG systems, agentic workflows
+- **Web Development** — Modern CSS, JavaScript patterns, performance tips
 
-## Stack
+## Tech Stack
 
 ```
-Frontend:  React, Next.js, Vanilla CSS, GSAP
-Backend:   Node.js, Python, FastAPI
-AI:        LangChain, Vercel AI SDK, OpenAI, Anthropic
-Infra:     Vercel, Docker, GitHub Actions
+Data:      Apache Spark, dbt, Airflow, Kafka
+AI/ML:     LangChain, OpenAI, Anthropic, HuggingFace
+Frontend:  React, Next.js, CSS, GSAP
+Infra:     Docker, Kubernetes, GitHub Actions
 ```
 
-## Contact
+## Connect
 
-- **GitHub**: [@alexr](https://github.com)
-- **Twitter**: [@alexr](https://twitter.com)
-- **Email**: alex@example.com
+Feel free to explore the posts, and if you'd like to get in touch, reach out via GitHub.
 
-Thanks for reading. Ship it. 🚀
+Happy reading! 🚀

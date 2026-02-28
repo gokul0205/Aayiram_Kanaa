@@ -1,15 +1,14 @@
-title: "Chirpy 2026"
-tagline: "Building with Bento, Glassmorphism & Liquid Surfaces"
-description: "A modern dev blog with glassmorphism bento grid design"
-url: "http://localhost:4000"
+title: "Aayiram Kanaa"
+tagline: "Games · Anime · Data Engineering · Code"
+description: "A blog about games, anime, data engineering, and building cool things"
+url: ""
 baseurl: ""
 
 author:
-  name: "Alex R."
-  avatar: "/assets/img/avatar.png"
-  email: "alex@example.com"
-  twitter: "alexr"
-  github: "alexr"
+  name: "Gokul"
+  avatar: "/assets/img/favicon.png"
+  email: ""
+  github: "gokul8235"
 
 lang: en
 

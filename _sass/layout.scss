@@ -521,8 +521,9 @@ body.light-mode .sidebar-search-btn {
     min-height: 100vh;
     padding: 2rem 2.5rem;
     max-width: calc(100vw - #{$sidebar-width});
-    // Prevent any child from overflowing the main column
-    overflow-x: hidden;
+    // Use 'clip' not 'hidden' — clip doesn't create a scroll container,
+    // so position:sticky on descendants (TOC) still works
+    overflow-x: clip;
 
     @media (max-width: $bp-tablet) {
         margin-left: 0;
@@ -531,7 +532,7 @@ body.light-mode .sidebar-search-btn {
         padding: 1rem;
         padding-top: calc(60px + 1rem);
         padding-bottom: 80px;
-        overflow-x: hidden;
+        overflow-x: clip;
     }
 }
 
@@ -730,7 +731,8 @@ body.light-mode .sidebar-search-btn {
         display: flex;
     }
 
-    a {
+    a,
+    button {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -742,6 +744,10 @@ body.light-mode .sidebar-search-btn {
         padding: 0.35rem 0.75rem;
         border-radius: 10px;
         transition: all $trans-fast;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
 
         .nav-icon-m {
             font-size: 1.2rem;
@@ -758,37 +764,7 @@ body.light-mode .sidebar-search-btn {
     }
 }
 
-// =========================================================
-// FLOATING SEARCH FAB (Mobile)
-// =========================================================
-.search-fab {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    right: 1.25rem;
-    z-index: $z-fab;
-    width: 52px;
-    height: 52px;
-    background: linear-gradient(135deg, $accent-amber, darken($accent-amber, 10%));
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.4);
-    color: #fff;
-    font-size: 1.25rem;
-    align-items: center;
-    justify-content: center;
-    transition: transform $trans-base, box-shadow $trans-base;
-
-    @media (max-width: $bp-tablet) {
-        display: flex;
-    }
-
-    &:hover {
-        transform: scale(1.1);
-        box-shadow: 0 8px 32px rgba(245, 158, 11, 0.5);
-    }
-}
+// Search FAB removed — search unified into topbar + bottom-nav
 
 // =========================================================
 // POST LAYOUT

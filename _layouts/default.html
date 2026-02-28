@@ -20,6 +20,10 @@
   <!-- Theme CSS -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/favicon.png' | relative_url }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/favicon.png' | relative_url }}">
+
   <!-- SEO -->
   {% seo %}
   {% feed_meta %}
@@ -49,8 +53,7 @@
   <!-- ======= MOBILE BOTTOM NAV ======= -->
   {% include bottom-nav.html %}
 
-  <!-- ======= SEARCH FAB (Mobile) ======= -->
-  {% include search-fab.html %}
+  <!-- Search FAB removed — search is available via topbar + bottom-nav -->
 
   <!-- ======= GLOBAL SEARCH MODAL ======= -->
   {% include search-modal.html %}

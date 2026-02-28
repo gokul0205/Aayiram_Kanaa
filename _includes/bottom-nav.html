@@ -3,15 +3,14 @@
         <span class="nav-icon-m"><i class="fa-solid fa-house"></i></span>
         Home
     </a>
-    <a href="{{ '/search/' | relative_url }}" id="nav-search">
+    <button id="nav-search" onclick="if(window.openSearchModal) window.openSearchModal();">
         <span class="nav-icon-m"><i class="fa-solid fa-magnifying-glass"></i></span>
         Search
-    </a>
+    </button>
     <a href="{{ '/categories/' | relative_url }}" id="nav-explore">
         <span class="nav-icon-m"><i class="fa-solid fa-compass"></i></span>
         Explore
     </a>
-    <!-- FIX 5: Changed "Profile" label to "About" and links to /about/ -->
     <a href="{{ '/about/' | relative_url }}" id="nav-about">
         <span class="nav-icon-m"><i class="fa-solid fa-circle-info"></i></span>
         About

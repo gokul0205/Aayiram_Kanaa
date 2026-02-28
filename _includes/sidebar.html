@@ -2,8 +2,8 @@
 
     <!-- Logo -->
     <a href="{{ '/' | relative_url }}" class="sidebar-logo" aria-label="{{ site.title }} home">
-        <div class="logo-icon">C</div>
-        <span class="site-title">CHIRPY</span>
+        <div class="logo-icon">🎮</div>
+        <span class="site-title">{{ site.title | default: "Aayiram Kanaa" }}</span>
     </a>
 
     <!-- Nav -->
@@ -28,7 +28,7 @@
         </li>
         <li>
             <a href="{{ '/about/' | relative_url }}">
-                <span class="nav-icon"><i class="fa-solid fa-user-circle"></i></span>
+                <span class="nav-icon"><i class="fa-solid fa-circle-info"></i></span>
                 About
             </a>
         </li>
@@ -42,20 +42,6 @@
         <span class="search-placeholder">Search posts…</span>
         <kbd class="search-shortcut">⌘K</kbd>
     </button>
-
-    <!-- FIX 4: Profile box links to About page -->
-    <a href="{{ '/about/' | relative_url }}" class="sidebar-profile" style="text-decoration:none;"
-        title="View About page">
-        <img src="{{ site.author.avatar | default: '' | relative_url }}" alt="{{ site.author.name }}" class="avatar"
-            onerror="this.src='https://ui-avatars.com/api/?name={{ site.author.name | url_encode }}&background=00d4c8&color=fff&size=80'">
-        <div>
-            <div class="profile-name">{{ site.author.name | default: "Alex R." }}</div>
-            <div class="profile-handle">@{{ site.author.twitter | default: "alexr" }}</div>
-        </div>
-        <span style="margin-left:auto;color:rgba(0,212,200,0.5);font-size:0.7rem;">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </span>
-    </a>
 
     <!-- Dark/Light Toggle -->
     <div class="theme-toggle">

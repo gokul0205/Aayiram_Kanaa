@@ -2,11 +2,11 @@
 
     <!-- Logo -->
     <a href="{{ '/' | relative_url }}" class="topbar-logo" aria-label="{{ site.title }}">
-        <div class="logo-icon">C</div>
-        <span class="site-title">CHIRPY</span>
+        <div class="logo-icon">🎮</div>
+        <span class="site-title">{{ site.title | default: "Aayiram Kanaa" }}</span>
     </a>
 
-    <!-- Actions — search opens modal, NOT the search page -->
+    <!-- Actions — search opens modal, theme toggle -->
     <div class="topbar-actions">
         <button id="topbar-search-btn" aria-label="Search"
             onclick="if(window.openSearchModal) window.openSearchModal();">
