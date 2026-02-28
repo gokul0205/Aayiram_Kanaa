@@ -4,15 +4,24 @@ layout: default
 
 <!-- ======= HERO ======= -->
 <section class="hero-section fade-in-up">
-    <div class="hero-label">
-        <i class="fa-solid fa-gamepad"></i>
-        {{ site.title | default: "Aayiram Kanaa" }}
+    {% if site.hero.image %}
+    <div class="hero-image-bg">
+        <img src="{{ site.hero.image | relative_url }}" alt="{{ site.hero.image_alt | default: 'Hero image' }}"
+            loading="eager">
     </div>
-    <h1 class="hero-title">
-        Games · Anime ·<br>
-        <span class="accent-word">Data</span> · Code
-    </h1>
-    <p class="hero-subtitle">{{ site.tagline | default: "A thousand dreams, one blog." }}</p>
+    {% endif %}
+    <div class="hero-content">
+        <div class="hero-label">
+            <i class="{{ site.hero.icon | default: 'fa-solid fa-gamepad' }}"></i>
+            {{ site.title | default: "Aayiram Kanaa" }}
+        </div>
+        <h1 class="hero-title rainbow-title">
+            {{ site.hero.heading_line1 | default: "Games · Anime ·" }}<br>
+            <span class="accent-word">{{ site.hero.heading_accent | default: "Data" }}</span> {{ site.hero.heading_line2
+            | default: "· Code" }}
+        </h1>
+        <p class="hero-subtitle">{{ site.hero.subtitle | default: site.tagline }}</p>
+    </div>
 </section>
 
 <!-- ======= BENTO GRID ======= -->

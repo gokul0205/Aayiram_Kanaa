@@ -8,7 +8,18 @@ author:
   name: "Gokul"
   avatar: "/assets/img/favicon.png"
   email: ""
-  github: "gokul8235"
+  github: "gokul0205"
+  linkedin: ""
+
+# Homepage Hero (configurable — edit here, not in HTML)
+hero:
+  heading_line1: "Games · Anime ·"
+  heading_accent: "Data"
+  heading_line2: "· Code"
+  subtitle: "A thousand dreams, one blog."
+  icon: "fa-solid fa-gamepad"
+  image: "/assets/img/hero.jpg"
+  image_alt: "Coding and coffee — hero illustration"
 
 lang: en
 

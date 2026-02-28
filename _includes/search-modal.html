@@ -1,5 +1,5 @@
 <!-- SEARCH MODAL (shared across all pages) -->
-<div id="search-modal" style="
+<div id="search-modal" data-search-url="{{ '/search.json' | relative_url }}" style="
   display:none;
   position:fixed;
   inset:0;
@@ -84,8 +84,11 @@
         var empty = document.getElementById('search-empty-state');
         var posts = [];
         var fetched = false;
-        var selectedIdx = -1;     // For ↑↓ arrow key navigation
-        var resultLinks = [];     // Cached anchor elements
+        var selectedIdx = -1;
+        var resultLinks = [];
+
+        // FIX 1: Use data attribute for search.json URL (handles GitHub Pages baseurl)
+        var searchUrl = modal.getAttribute('data-search-url') || '/search.json';
 
         function openModal() {
             modal.style.display = 'flex';
@@ -93,7 +96,7 @@
             selectedIdx = -1;
             if (!fetched) {
                 fetched = true;
-                fetch('/search.json').then(function (r) { return r.json(); }).then(function (data) { posts = data; }).catch(function () { });
+                fetch(searchUrl).then(function (r) { return r.json(); }).then(function (data) { posts = data; }).catch(function (e) { console.error('Search fetch failed:', e); });
             }
             applyTheme();
         }
