@@ -1,0 +1,20 @@
+<header class="topbar" id="topbar" aria-label="Mobile top navigation">
+
+    <!-- Logo -->
+    <a href="{{ '/' | relative_url }}" class="topbar-logo" aria-label="{{ site.title }}">
+        <div class="logo-icon">C</div>
+        <span class="site-title">CHIRPY</span>
+    </a>
+
+    <!-- Actions — search opens modal, NOT the search page -->
+    <div class="topbar-actions">
+        <button id="topbar-search-btn" aria-label="Search"
+            onclick="if(window.openSearchModal) window.openSearchModal();">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+        <button id="topbar-theme-toggle" aria-label="Toggle theme">
+            <i class="fa-solid fa-moon" id="topbar-toggle-icon"></i>
+        </button>
+    </div>
+
+</header>

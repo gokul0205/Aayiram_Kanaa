@@ -1,0 +1,12 @@
+# Git ignore file for Jekyll projects
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+vendor/
+node_modules/
+*.gem
+*.rbc
+.bundle/
+.idea/
+.vscode/

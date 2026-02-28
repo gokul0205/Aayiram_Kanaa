@@ -1,0 +1,90 @@
+// =============================================================================
+// CHIRPY 2026 — SCSS Variables
+// Deep Navy → Teal glassmorphism design system
+// =============================================================================
+
+// --- Color Palette ---
+$bg-deep:          #0a0f1e;
+$bg-mid:           #0d1b2a;
+$bg-teal:          #0d2137;
+
+$sidebar-bg:       rgba(10, 20, 40, 0.72);
+$sidebar-border:   rgba(0, 212, 200, 0.22);
+$sidebar-glow:     rgba(0, 212, 200, 0.06);
+
+$card-bg:          rgba(13, 28, 52, 0.70);
+$card-border:      rgba(0, 212, 200, 0.12);
+$card-hover-glow:  rgba(0, 212, 200, 0.18);
+$card-hover-bg:    rgba(0, 212, 200, 0.04);
+
+$accent:           #00d4c8;
+$accent-hover:     #00f5e8;
+$accent-muted:     rgba(0, 212, 200, 0.15);
+$accent-amber:     #f59e0b;   // FAB / toggle glow
+
+$text-primary:     #e8eaf0;
+$text-secondary:   #7a8ba0;
+$text-muted:       #4a5a70;
+
+$badge-web:        rgba(0, 212, 200, 0.18);
+$badge-ai:         rgba(139, 92, 246, 0.25);
+$badge-js:         rgba(245, 158, 11, 0.22);
+
+// --- Glassmorphism ---
+$glass-blur:       18px;
+$glass-blur-sm:    10px;
+$glass-border:     rgba(255, 255, 255, 0.08);
+$glass-shadow:     0 8px 32px rgba(0, 0, 0, 0.5);
+$glass-inset:      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+// --- Sidebar ---
+$sidebar-width:    240px;
+$sidebar-width-xl: 260px;
+
+// --- Grid ---
+$bento-gap:    16px;
+$bento-cols:   4;
+$card-radius:  16px;
+$card-radius-sm: 12px;
+
+// --- Typography ---
+$font-heading:  'Inter', 'Geist', sans-serif;
+$font-body:     'Inter', sans-serif;
+$font-mono:     'JetBrains Mono', 'Fira Code', monospace;
+
+$fs-hero:      clamp(2.4rem, 4vw, 3.6rem);
+$fs-h1:        clamp(1.8rem, 3vw, 2.4rem);
+$fs-h2:        1.5rem;
+$fs-h3:        1.2rem;
+$fs-body:      1rem;
+$fs-sm:        0.875rem;
+$fs-xs:        0.75rem;
+$lh-body:      1.75;
+
+// --- Breakpoints ---
+$bp-mobile:    480px;
+$bp-tablet:    768px;
+$bp-desktop:   1024px;
+$bp-wide:      1280px;
+
+// --- Transitions ---
+$trans-fast:   0.15s ease;
+$trans-base:   0.25s ease;
+$trans-slow:   0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+// --- Z-index layers ---
+$z-sidebar:    100;
+$z-topbar:     200;
+$z-fab:        300;
+$z-progress:   400;
+$z-modal:      500;
+
+// =============================================================================
+// Light Mode Overrides (applied when body has .light-mode)
+// =============================================================================
+$lm-bg:           #f0f4f8;
+$lm-sidebar-bg:   rgba(230, 240, 250, 0.90);
+$lm-card-bg:      rgba(255, 255, 255, 0.85);
+$lm-text-primary: #1a2332;
+$lm-text-secondary: #4a5a70;
+$lm-border:       rgba(0, 180, 170, 0.20);

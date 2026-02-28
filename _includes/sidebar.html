@@ -1,0 +1,70 @@
+<nav class="sidebar" id="sidebar" role="navigation" aria-label="Primary navigation">
+
+    <!-- Logo -->
+    <a href="{{ '/' | relative_url }}" class="sidebar-logo" aria-label="{{ site.title }} home">
+        <div class="logo-icon">C</div>
+        <span class="site-title">CHIRPY</span>
+    </a>
+
+    <!-- Nav -->
+    <ul class="sidebar-nav" role="list">
+        <li>
+            <a href="{{ '/' | relative_url }}">
+                <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                Home
+            </a>
+        </li>
+        <li>
+            <a href="{{ '/tags/' | relative_url }}">
+                <span class="nav-icon"><i class="fa-solid fa-tags"></i></span>
+                Tags
+            </a>
+        </li>
+        <li>
+            <a href="{{ '/categories/' | relative_url }}">
+                <span class="nav-icon"><i class="fa-solid fa-compass"></i></span>
+                Explore
+            </a>
+        </li>
+        <li>
+            <a href="{{ '/about/' | relative_url }}">
+                <span class="nav-icon"><i class="fa-solid fa-user-circle"></i></span>
+                About
+            </a>
+        </li>
+    </ul>
+
+    <!-- Search trigger → opens global search modal (Ctrl+K) -->
+    <button class="sidebar-search-btn" id="sidebar-search-input"
+        onclick="if(window.openSearchModal) window.openSearchModal();" aria-label="Search (Ctrl+K)"
+        title="Search (Ctrl+K)">
+        <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <span class="search-placeholder">Search posts…</span>
+        <kbd class="search-shortcut">⌘K</kbd>
+    </button>
+
+    <!-- FIX 4: Profile box links to About page -->
+    <a href="{{ '/about/' | relative_url }}" class="sidebar-profile" style="text-decoration:none;"
+        title="View About page">
+        <img src="{{ site.author.avatar | default: '' | relative_url }}" alt="{{ site.author.name }}" class="avatar"
+            onerror="this.src='https://ui-avatars.com/api/?name={{ site.author.name | url_encode }}&background=00d4c8&color=fff&size=80'">
+        <div>
+            <div class="profile-name">{{ site.author.name | default: "Alex R." }}</div>
+            <div class="profile-handle">@{{ site.author.twitter | default: "alexr" }}</div>
+        </div>
+        <span style="margin-left:auto;color:rgba(0,212,200,0.5);font-size:0.7rem;">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </span>
+    </a>
+
+    <!-- Dark/Light Toggle -->
+    <div class="theme-toggle">
+        <span class="toggle-label">
+            <i class="fa-solid fa-moon" id="toggle-icon"></i>
+            <span id="toggle-text">Dark</span>
+        </span>
+        <div class="toggle-pill" id="theme-toggle-pill" role="switch" aria-checked="false" tabindex="0"
+            aria-label="Toggle light/dark mode"></div>
+    </div>
+
+</nav>

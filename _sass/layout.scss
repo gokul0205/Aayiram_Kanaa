@@ -1,0 +1,841 @@
+// =============================================================================
+// CHIRPY 2026 — Layout Styles
+// Sidebar, topbar, main grid, bento layout, mobile nav
+// =============================================================================
+@import 'variables';
+@import 'glassmorphism';
+
+// --- Base Reset / Body ---
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: $font-body;
+    font-size: $fs-body;
+    line-height: $lh-body;
+    color: $text-primary;
+    @include radial-bg;
+    min-height: 100vh;
+    @include custom-scrollbar;
+
+    &.light-mode {
+        // FIX 2: Full light mode overrides — background, all text surfaces, inputs
+        background: linear-gradient(135deg, $lm-bg 0%, #ddeaf7 100%);
+        color: $lm-text-primary;
+
+        // Sidebar
+        .sidebar {
+            background: $lm-sidebar-bg;
+            border-color: $lm-border;
+            color: $lm-text-primary;
+        }
+
+        .sidebar-nav li a {
+            color: $lm-text-secondary;
+        }
+
+        .sidebar-nav li a:hover,
+        .sidebar-nav li a.active {
+            color: $accent;
+        }
+
+        .site-title {
+            color: $accent;
+        }
+
+        .profile-name {
+            color: $lm-text-primary;
+        }
+
+        .profile-handle {
+            color: $lm-text-secondary;
+        }
+
+        .toggle-label {
+            color: $lm-text-secondary;
+        }
+
+        .sidebar-profile {
+            background: rgba(0, 180, 170, 0.07);
+            border-color: $lm-border;
+        }
+
+        // Sidebar search input
+        .sidebar-search input {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: $lm-border;
+            color: $lm-text-primary;
+
+            &::placeholder {
+                color: #8fa3b5;
+            }
+        }
+
+        .sidebar-search .search-icon {
+            color: #8fa3b5;
+        }
+
+        // Topbar
+        .topbar {
+            background: rgba(230, 240, 255, 0.96);
+            border-color: $lm-border;
+
+            .site-title {
+                color: $accent;
+            }
+
+            .topbar-actions button,
+            .topbar-actions a {
+                color: $lm-text-secondary;
+            }
+        }
+
+        // Bottom nav
+        .mobile-bottom-nav {
+            background: rgba(230, 240, 255, 0.97);
+            border-color: $lm-border;
+
+            a {
+                color: $lm-text-secondary;
+            }
+
+            a:hover,
+            a.active {
+                color: $accent;
+            }
+        }
+
+        // Hero
+        .hero-section {
+            background: transparent;
+        }
+
+        h1.hero-title {
+            color: $lm-text-primary;
+        }
+
+        .hero-subtitle {
+            color: $lm-text-secondary;
+        }
+
+        .hero-label {
+            background: rgba(0, 212, 200, 0.12);
+            color: $accent;
+        }
+
+        // Bento cards
+        .bento-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(0, 180, 170, 0.18);
+            color: $lm-text-primary;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .bento-card:hover {
+            border-color: rgba(0, 212, 200, 0.40);
+        }
+
+        .card-title {
+            color: $lm-text-primary !important;
+        }
+
+        .card-meta {
+            color: $lm-text-secondary !important;
+        }
+
+        .card-excerpt {
+            color: $lm-text-secondary !important;
+        }
+
+        .tag-pill {
+            color: $lm-text-secondary;
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        .tag-pill:hover {
+            color: $accent;
+            background: rgba(0, 212, 200, 0.1);
+        }
+
+        .section-heading h2 {
+            color: $lm-text-primary;
+        }
+
+        .section-count {
+            color: $lm-text-secondary;
+        }
+
+        // Post
+        .post-header {
+            border-color: rgba(0, 180, 170, 0.15);
+        }
+
+        h1.post-title {
+            color: $lm-text-primary;
+        }
+
+        .post-meta {
+            color: $lm-text-secondary;
+        }
+
+        .post-body {
+            color: $lm-text-primary;
+
+            h2,
+            h3 {
+                color: $lm-text-primary;
+            }
+
+            blockquote {
+                color: $lm-text-secondary;
+            }
+
+            :not(pre)>code {
+                background: rgba(0, 180, 170, 0.1);
+                color: darken($accent, 10%);
+            }
+        }
+
+        .toc-panel {
+            background: rgba(230, 240, 255, 0.90);
+            border-color: $lm-border;
+        }
+
+        .toc-panel h3 {
+            color: $lm-text-primary;
+        }
+
+        #toc-list li a {
+            color: $lm-text-secondary;
+        }
+
+        #toc-list li a.active {
+            color: $accent;
+            background: rgba(0, 212, 200, 0.1);
+        }
+
+        .post-footer-tags .tags-label {
+            color: $lm-text-secondary;
+        }
+
+        // Tags / categories pages
+        .tag-cloud-item {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 180, 170, 0.18);
+            color: $lm-text-secondary;
+        }
+
+        .tag-cloud-item:hover {
+            color: $accent;
+        }
+
+        .tag-count {
+            color: $lm-text-secondary;
+        }
+
+        .code-block pre {
+            background: #1a1f2e !important;
+        }
+
+        .pagination a,
+        .pagination span {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 180, 170, 0.18);
+            color: $lm-text-secondary;
+        }
+
+        .pagination a:hover,
+        .pagination .current {
+            background: rgba(0, 212, 200, 0.1);
+            color: $accent;
+        }
+    }
+}
+
+// --- App Shell ---
+.app-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+// =========================================================
+// SIDEBAR (Desktop)
+// =========================================================
+.sidebar {
+    width: $sidebar-width;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: $z-sidebar;
+    @include glass($sidebar-bg, $glass-blur, $sidebar-border);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 1.25rem;
+    gap: 0.5rem;
+    border-left: none;
+    border-top: none;
+    border-bottom: none;
+    border-right: 1px solid $sidebar-border;
+    box-shadow: 0 0 40px $sidebar-glow, $glass-shadow;
+
+    @include custom-scrollbar;
+    overflow-y: auto;
+
+    // FIX 1: Hide sidebar on mobile — topbar takes over
+    @media (max-width: $bp-tablet) {
+        display: none;
+    }
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    text-decoration: none;
+
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, $accent, #0090a0);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1rem;
+        color: #fff;
+        box-shadow: 0 0 12px rgba(0, 212, 200, 0.4);
+    }
+
+    .site-title {
+        font-family: $font-heading;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: $accent;
+        letter-spacing: -0.02em;
+    }
+}
+
+.sidebar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+
+    li a {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.55rem 0.75rem;
+        border-radius: 10px;
+        color: $text-secondary;
+        text-decoration: none;
+        font-size: $fs-sm;
+        font-weight: 500;
+        transition: all $trans-base;
+
+        .nav-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        &:hover,
+        &.active {
+            color: $accent;
+            background: $accent-muted;
+            box-shadow: 0 0 0 1px rgba(0, 212, 200, 0.12);
+        }
+
+        &.active {
+            font-weight: 600;
+        }
+    }
+}
+
+.sidebar-search-btn {
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    background: rgba(0, 212, 200, 0.05);
+    border: 1px solid rgba(0, 212, 200, 0.15);
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+    color: $text-muted;
+    font-size: $fs-sm;
+    font-family: $font-body;
+    cursor: pointer;
+    text-align: left;
+    transition: all $trans-base;
+
+    .search-icon {
+        color: $text-muted;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+
+    .search-placeholder {
+        flex: 1;
+    }
+
+    .search-shortcut {
+        font-size: 0.65rem;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        padding: 0.1rem 0.35rem;
+        font-family: $font-body;
+        color: $text-muted;
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        border-color: rgba(0, 212, 200, 0.35);
+        background: rgba(0, 212, 200, 0.09);
+        color: $text-secondary;
+        box-shadow: 0 0 0 2px rgba(0, 212, 200, 0.1);
+    }
+}
+
+// Light mode override for search button
+body.light-mode .sidebar-search-btn {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 180, 170, 0.25);
+    color: $lm-text-secondary;
+
+    .search-shortcut {
+        background: rgba(0, 0, 0, 0.04);
+        border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:hover {
+        background: rgba(0, 212, 200, 0.08);
+        border-color: rgba(0, 180, 170, 0.4);
+    }
+}
+
+
+.sidebar-profile {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    background: rgba(0, 212, 200, 0.05);
+    border: 1px solid rgba(0, 212, 200, 0.08);
+
+    .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid $accent;
+        object-fit: cover;
+        box-shadow: 0 0 8px rgba(0, 212, 200, 0.3);
+    }
+
+    .profile-name {
+        font-size: $fs-sm;
+        font-weight: 600;
+        color: $text-primary;
+    }
+
+    .profile-handle {
+        font-size: $fs-xs;
+        color: $text-muted;
+    }
+}
+
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.5rem;
+
+    .toggle-label {
+        font-size: $fs-xs;
+        color: $text-secondary;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .toggle-pill {
+        position: relative;
+        width: 46px;
+        height: 24px;
+        background: rgba(245, 158, 11, 0.3);
+        border-radius: 12px;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+        cursor: pointer;
+        transition: all $trans-base;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: $accent-amber;
+            box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+            transition: transform $trans-base;
+        }
+
+        &.light-active {
+            background: rgba(0, 212, 200, 0.2);
+            border-color: rgba(0, 212, 200, 0.4);
+
+            &::after {
+                transform: translateX(22px);
+                background: $accent;
+                box-shadow: 0 0 6px rgba(0, 212, 200, 0.5);
+            }
+        }
+    }
+}
+
+// =========================================================
+// MAIN CONTENT AREA
+// =========================================================
+.main-content {
+    margin-left: $sidebar-width;
+    flex: 1;
+    min-height: 100vh;
+    padding: 2rem 2.5rem;
+    max-width: calc(100vw - #{$sidebar-width});
+    // Prevent any child from overflowing the main column
+    overflow-x: hidden;
+
+    @media (max-width: $bp-tablet) {
+        margin-left: 0;
+        max-width: 100vw;
+        width: 100%;
+        padding: 1rem;
+        padding-top: calc(60px + 1rem);
+        padding-bottom: 80px;
+        overflow-x: hidden;
+    }
+}
+
+// =========================================================
+// HERO SECTION
+// =========================================================
+.hero-section {
+    padding: 3rem 0 2.5rem;
+
+    .hero-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: $accent-muted;
+        border: 1px solid rgba(0, 212, 200, 0.2);
+        border-radius: 100px;
+        padding: 0.25rem 0.85rem;
+        font-size: $fs-xs;
+        font-weight: 600;
+        color: $accent;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 1.25rem;
+    }
+
+    h1.hero-title {
+        font-family: $font-heading;
+        font-size: $fs-hero;
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: $text-primary;
+        max-width: 720px;
+
+        .accent-word {
+            color: $accent;
+        }
+    }
+
+    .hero-subtitle {
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        color: $text-secondary;
+        max-width: 540px;
+        line-height: 1.6;
+    }
+}
+
+// =========================================================
+// BENTO GRID
+// =========================================================
+.bento-section {
+    padding-bottom: 3rem;
+}
+
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat($bento-cols, 1fr);
+    gap: $bento-gap;
+    grid-auto-flow: dense;
+
+    // Featured card (double width)
+    .bento-card:first-child {
+        grid-column: span 2;
+
+        .card-thumb {
+            height: 200px;
+        }
+    }
+
+    @media (max-width: $bp-wide) {
+        grid-template-columns: repeat(3, 1fr);
+
+        .bento-card:first-child {
+            grid-column: span 2;
+        }
+    }
+
+    @media (max-width: $bp-desktop) {
+        grid-template-columns: repeat(2, 1fr);
+
+        .bento-card:first-child {
+            grid-column: span 2;
+        }
+    }
+
+    @media (max-width: $bp-tablet) {
+        grid-template-columns: 1fr;
+
+        .bento-card:first-child {
+            grid-column: span 1;
+        }
+    }
+}
+
+// =========================================================
+// MOBILE TOPBAR
+// =========================================================
+.topbar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-topbar;
+    height: 60px;
+    @include glass(rgba(10, 15, 30, 0.90), $glass-blur-sm, rgba(0, 212, 200, 0.15));
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: $bp-tablet) {
+        display: flex;
+    }
+
+    .topbar-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        text-decoration: none;
+
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, $accent, #0090a0);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .site-title {
+            font-family: $font-heading;
+            font-weight: 800;
+            font-size: 1rem;
+            color: $accent;
+        }
+    }
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        button,
+        a {
+            background: rgba(0, 212, 200, 0.08);
+            border: 1px solid rgba(0, 212, 200, 0.12);
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $text-secondary;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all $trans-fast;
+
+            &:hover {
+                color: $accent;
+                border-color: rgba(0, 212, 200, 0.3);
+            }
+        }
+    }
+}
+
+// =========================================================
+// MOBILE BOTTOM NAV
+// =========================================================
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: $z-topbar;
+    height: 64px;
+    @include glass(rgba(8, 14, 28, 0.95), $glass-blur-sm, rgba(0, 212, 200, 0.15));
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid rgba(0, 212, 200, 0.12);
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-around;
+
+    @media (max-width: $bp-tablet) {
+        display: flex;
+    }
+
+    a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        text-decoration: none;
+        color: $text-muted;
+        font-size: $fs-xs;
+        font-weight: 500;
+        padding: 0.35rem 0.75rem;
+        border-radius: 10px;
+        transition: all $trans-fast;
+
+        .nav-icon-m {
+            font-size: 1.2rem;
+        }
+
+        &:hover,
+        &.active {
+            color: $accent;
+        }
+
+        &.active .nav-icon-m {
+            filter: drop-shadow(0 0 4px rgba(0, 212, 200, 0.5));
+        }
+    }
+}
+
+// =========================================================
+// FLOATING SEARCH FAB (Mobile)
+// =========================================================
+.search-fab {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 1.25rem;
+    z-index: $z-fab;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, $accent-amber, darken($accent-amber, 10%));
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(245, 158, 11, 0.4);
+    color: #fff;
+    font-size: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    transition: transform $trans-base, box-shadow $trans-base;
+
+    @media (max-width: $bp-tablet) {
+        display: flex;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 32px rgba(245, 158, 11, 0.5);
+    }
+}
+
+// =========================================================
+// POST LAYOUT
+// =========================================================
+.post-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 2rem;
+    align-items: start;
+    position: relative;
+
+    @media (max-width: $bp-desktop) {
+        grid-template-columns: 1fr;
+    }
+}
+
+// =========================================================
+// PAGINATION
+// =========================================================
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 2rem 0;
+
+    a,
+    span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: $card-bg;
+        border: 1px solid $card-border;
+        color: $text-secondary;
+        text-decoration: none;
+        font-size: $fs-sm;
+        font-weight: 500;
+        transition: all $trans-fast;
+
+        &.current,
+        &:hover {
+            background: $accent-muted;
+            color: $accent;
+            border-color: rgba(0, 212, 200, 0.3);
+        }
+    }
+}

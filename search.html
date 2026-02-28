@@ -1,0 +1,161 @@
+---
+layout: default
+title: Search
+permalink: /search/
+---
+
+<!-- Search Page — styled to match the search modal aesthetic -->
+<section class="search-page">
+
+    <!-- Hero Search Header -->
+    <div class="search-page-hero">
+        <div class="search-page-box">
+            <span class="search-page-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="search" id="search-input" placeholder="Search posts, tags, categories…" aria-label="Search"
+                autofocus spellcheck="false" autocomplete="off">
+            <span class="search-page-hint" id="search-count"></span>
+        </div>
+        <p class="search-page-sub">Type to filter posts instantly</p>
+    </div>
+
+    <!-- Results grid -->
+    <div class="bento-grid" id="search-results">
+        {% for post in site.posts %}
+        <div class="bento-card" data-title="{{ post.title | downcase }}"
+            data-tags="{{ post.tags | join: ' ' | downcase }}" data-cats="{{ post.categories | join: ' ' | downcase }}"
+            data-excerpt="{{ post.excerpt | strip_html | downcase | truncate: 200 }}">
+            {% include bento-card.html post=post %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- No results state -->
+    <div id="no-results" style="display:none; text-align:center; padding:3rem 1rem; color:var(--text-muted, #7a8ba0);">
+        <i class="fa-solid fa-circle-xmark"
+            style="font-size:2rem; margin-bottom:0.75rem; display:block; opacity:0.4;"></i>
+        <div style="font-size:1rem; font-weight:600; margin-bottom:0.25rem;">No posts found</div>
+        <div style="font-size:0.85rem;">Try a different keyword</div>
+    </div>
+
+</section>
+
+<style>
+    /* Search page — matches the modal's glassmorphism style */
+    .search-page {
+        padding: 0;
+    }
+
+    .search-page-hero {
+        margin-bottom: 2rem;
+    }
+
+    .search-page-box {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: var(--card-bg, rgba(10, 20, 40, 0.7));
+        border: 1px solid rgba(0, 212, 200, 0.22);
+        border-radius: 16px;
+        padding: 0.9rem 1.25rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(16px);
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-page-box:focus-within {
+        border-color: rgba(0, 212, 200, 0.5);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(0, 212, 200, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .search-page-icon {
+        color: #00d4c8;
+        font-size: 1.1rem;
+        flex-shrink: 0;
+    }
+
+    #search-input {
+        flex: 1;
+        background: none;
+        border: none;
+        outline: none;
+        font-size: 1.05rem;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: var(--text-primary, #e8eaf0);
+        caret-color: #00d4c8;
+        letter-spacing: -0.01em;
+    }
+
+    #search-input::placeholder {
+        color: var(--text-muted, #7a8ba0);
+        font-weight: 400;
+    }
+
+    .search-page-hint {
+        font-size: 0.72rem;
+        color: var(--text-muted, #7a8ba0);
+        font-family: 'Inter', sans-serif;
+        flex-shrink: 0;
+        min-width: 3.5rem;
+        text-align: right;
+    }
+
+    .search-page-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted, #7a8ba0);
+        margin-top: 0.5rem;
+        padding-left: 0.25rem;
+    }
+
+    /* Light mode overrides */
+    body.light-mode .search-page-box {
+        background: rgba(255, 255, 255, 0.85);
+        border-color: rgba(0, 180, 170, 0.25);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-mode #search-input {
+        color: #1a2a3a;
+    }
+
+    body.light-mode .search-page-box:focus-within {
+        border-color: rgba(0, 180, 170, 0.5);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 0 0 3px rgba(0, 180, 170, 0.12);
+    }
+</style>
+
+<script>
+    (function () {
+        var input = document.getElementById('search-input');
+        var cards = document.querySelectorAll('#search-results > .bento-card');
+        var noResults = document.getElementById('no-results');
+        var hint = document.getElementById('search-count');
+
+        if (!input) return;
+
+        function updateHint(shown, total) {
+            if (!hint) return;
+            hint.textContent = input.value.trim()
+                ? shown + ' of ' + total
+                : total + ' posts';
+        }
+
+        updateHint(cards.length, cards.length);
+
+        input.addEventListener('input', function () {
+            var q = this.value.toLowerCase().trim();
+            var shown = 0;
+            cards.forEach(function (c) {
+                var match = !q ||
+                    (c.dataset.title && c.dataset.title.includes(q)) ||
+                    (c.dataset.tags && c.dataset.tags.includes(q)) ||
+                    (c.dataset.cats && c.dataset.cats.includes(q)) ||
+                    (c.dataset.excerpt && c.dataset.excerpt.includes(q));
+                c.style.display = match ? '' : 'none';
+                if (match) shown++;
+            });
+            noResults.style.display = shown === 0 && q ? 'block' : 'none';
+            updateHint(shown, cards.length);
+        });
+    })();
+</script>

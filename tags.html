@@ -1,0 +1,38 @@
+---
+layout: default
+title: Tags
+permalink: /tags/
+---
+
+<section class="tags-page">
+    <div class="section-heading">
+        <h2>Tags</h2>
+        <span class="section-count">{{ site.tags | size }} topics</span>
+    </div>
+
+    <div class="tags-cloud">
+        {% assign all_tags = site.tags | sort %}
+        {% for tag in all_tags %}
+        <a href="#{{ tag[0] | slugify }}" class="tag-cloud-item">
+            #{{ tag[0] }}
+            <span class="tag-count">{{ tag[1] | size }}</span>
+        </a>
+        {% endfor %}
+    </div>
+
+    <div class="tagged-posts">
+        {% for tag in all_tags %}
+        <div id="{{ tag[0] | slugify }}" style="margin-bottom: 2.5rem;">
+            <div class="section-heading" style="margin-bottom: 1rem;">
+                <h2 style="font-size:1rem;">#{{ tag[0] }}</h2>
+                <span class="section-count">{{ tag[1] | size }}</span>
+            </div>
+            <div class="bento-grid" style="grid-template-columns: repeat(3, 1fr);">
+                {% for post in tag[1] limit:3 %}
+                {% include bento-card.html post=post %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

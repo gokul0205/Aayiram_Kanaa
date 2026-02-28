@@ -1,0 +1,83 @@
+---
+layout: default
+---
+
+<!-- Reading Progress Bar -->
+{% include reading-progress.html %}
+
+<div class="post-layout">
+
+    <!-- ======= LEFT TOC PANEL ======= -->
+    <aside class="toc-panel" id="toc-panel" aria-label="Table of Contents">
+        <div class="toc-header">
+            <h3><i class="fa-solid fa-list-ul" style="color: var(--accent, #00d4c8); margin-right:0.4rem;"></i>TOC</h3>
+            <button class="toc-toggle-btn" id="toc-toggle" aria-label="Toggle TOC">
+                <i class="fa-solid fa-chevron-up" id="toc-toggle-icon"></i>
+            </button>
+        </div>
+        <ul id="toc-list"></ul>
+    </aside>
+
+    <!-- ======= POST BODY ======= -->
+    <article class="post-content">
+
+        <!-- Post Header -->
+        <header class="post-header">
+            <div class="post-category">
+                {% if page.categories %}
+                {% assign cat = page.categories | first | downcase %}
+                <span class="category-pill cat-{{ cat }}">{{ page.categories | first }}</span>
+                {% endif %}
+            </div>
+
+            <h1 class="post-title">{{ page.title }}</h1>
+
+            <div class="post-meta">
+                <span>
+                    <i class="fa-regular fa-user"></i>
+                    <a href="#" class="author-link">{{ page.author | default: site.author.name }}</a>
+                </span>
+                <span class="divider">|</span>
+                <span>
+                    <i class="fa-regular fa-calendar"></i>
+                    {{ page.date | date: "%b %d, %Y" }}
+                </span>
+                <span class="divider">|</span>
+                <span>
+                    <i class="fa-regular fa-clock"></i>
+                    {% assign words = content | number_of_words %}
+                    {% assign read_time = words | divided_by: 200 | plus: 1 %}
+                    {{ read_time }} min read
+                </span>
+            </div>
+        </header>
+
+        <!-- Post Thumbnail -->
+        {% if page.image %}
+        <div class="post-image-block" style="margin-bottom: 2rem;">
+            <img src="{{ page.image | relative_url }}" alt="{{ page.title }}" loading="lazy">
+            {% if page.image_caption %}
+            <p class="image-caption">{{ page.image_caption }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Post Body -->
+        <div class="post-body" id="post-body">
+            {{ content }}
+        </div>
+
+        <!-- Tags Footer -->
+        {% if page.tags %}
+        <footer class="post-footer-tags">
+            <span class="tags-label"><i class="fa-solid fa-tags"></i> Tags</span>
+            {% for tag in page.tags %}
+            <a href="/tags/#{{ tag | slugify }}" class="tag-pill">{{ tag }}</a>
+            {% endfor %}
+        </footer>
+        {% endif %}
+
+    </article>
+</div>
+
+<script src="{{ '/assets/js/reading-progress.js' | relative_url }}"></script>

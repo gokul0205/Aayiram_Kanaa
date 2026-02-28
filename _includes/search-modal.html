@@ -1,0 +1,223 @@
+<!-- SEARCH MODAL (shared across all pages) -->
+<div id="search-modal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:10vh;
+  background:rgba(4,8,20,0.75);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+" role="dialog" aria-modal="true" aria-label="Search">
+
+    <div id="search-modal-box" style="
+    width:min(620px,90vw);
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(0,212,200,0.22);
+    box-shadow:0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(0,212,200,0.08);
+    background:rgba(8,16,36,0.97);
+    backdrop-filter:blur(20px);
+  " class="search-modal-box">
+
+        <!-- Input row -->
+        <div
+            style="display:flex;align-items:center;gap:0.75rem;padding:1rem 1.25rem;border-bottom:1px solid rgba(0,212,200,0.1);">
+            <i class="fa-solid fa-magnifying-glass" style="color:#00d4c8;font-size:1rem;flex-shrink:0;"></i>
+            <input id="search-modal-input" type="text" placeholder="Search posts, tags, categories…" autocomplete="off"
+                style="
+          flex:1;
+          background:none;
+          border:none;
+          outline:none;
+          font-size:1rem;
+          font-family:inherit;
+          color:#e8eaf0;
+          caret-color:#00d4c8;
+        " aria-label="Search">
+            <kbd style="
+        font-size:0.7rem;
+        color:#7a8ba0;
+        background:rgba(255,255,255,0.05);
+        border:1px solid rgba(255,255,255,0.1);
+        border-radius:5px;
+        padding:0.15rem 0.4rem;
+        font-family:inherit;
+        flex-shrink:0;
+        cursor:pointer;
+      " id="search-close-kbd" title="Close">Esc</kbd>
+        </div>
+
+        <!-- Results -->
+        <div id="search-modal-results" style="max-height:400px;overflow-y:auto;padding:0.5rem 0;">
+            <div id="search-empty-state"
+                style="padding:2.5rem 1.25rem;text-align:center;color:#7a8ba0;font-size:0.85rem;">
+                <i class="fa-solid fa-keyboard"
+                    style="font-size:1.5rem;margin-bottom:0.5rem;display:block;opacity:0.4;"></i>
+                Start typing to search posts…
+            </div>
+        </div>
+
+        <!-- Footer hint -->
+        <div
+            style="padding:0.6rem 1.25rem;border-top:1px solid rgba(0,212,200,0.07);display:flex;gap:1.25rem;font-size:0.7rem;color:#7a8ba0;">
+            <span><kbd
+                    style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.1rem 0.35rem;font-family:inherit;">↑↓</kbd>
+                Navigate</span>
+            <span><kbd
+                    style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.1rem 0.35rem;font-family:inherit;">↵</kbd>
+                Open</span>
+            <span><kbd
+                    style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.1rem 0.35rem;font-family:inherit;">Esc</kbd>
+                Close</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        var modal = document.getElementById('search-modal');
+        var input = document.getElementById('search-modal-input');
+        var results = document.getElementById('search-modal-results');
+        var empty = document.getElementById('search-empty-state');
+        var posts = [];
+        var fetched = false;
+        var selectedIdx = -1;     // For ↑↓ arrow key navigation
+        var resultLinks = [];     // Cached anchor elements
+
+        function openModal() {
+            modal.style.display = 'flex';
+            input.focus();
+            selectedIdx = -1;
+            if (!fetched) {
+                fetched = true;
+                fetch('/search.json').then(function (r) { return r.json(); }).then(function (data) { posts = data; }).catch(function () { });
+            }
+            applyTheme();
+        }
+
+        function applyTheme() {
+            var isLight = document.body.classList.contains('light-mode');
+            var box = document.getElementById('search-modal-box');
+            box.style.background = isLight ? 'rgba(240,248,255,0.98)' : 'rgba(8,16,36,0.97)';
+            box.style.border = isLight ? '1px solid rgba(0,180,170,0.25)' : '1px solid rgba(0,212,200,0.22)';
+            input.style.color = isLight ? '#1a2a3a' : '#e8eaf0';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            input.value = '';
+            results.innerHTML = '';
+            results.appendChild(empty);
+            selectedIdx = -1;
+            resultLinks = [];
+        }
+
+        function highlight(idx) {
+            resultLinks.forEach(function (a, i) {
+                if (i === idx) {
+                    a.style.background = document.body.classList.contains('light-mode')
+                        ? 'rgba(0,180,170,0.10)' : 'rgba(0,212,200,0.10)';
+                    a.style.outline = '2px solid rgba(0,212,200,0.35)';
+                    a.style.outlineOffset = '-2px';
+                    a.scrollIntoView({ block: 'nearest' });
+                } else {
+                    a.style.background = '';
+                    a.style.outline = '';
+                }
+            });
+        }
+
+        function renderResults(items) {
+            results.innerHTML = '';
+            if (!input.value.trim()) { results.appendChild(empty); resultLinks = []; return; }
+            if (items.length === 0) {
+                results.innerHTML = '<div style="padding:2rem 1.25rem;text-align:center;color:#7a8ba0;font-size:0.85rem;"><i class="fa-solid fa-circle-xmark" style="font-size:1.2rem;margin-bottom:0.4rem;display:block;opacity:0.4;"></i>No posts found</div>';
+                resultLinks = [];
+                return;
+            }
+            var isLight = document.body.classList.contains('light-mode');
+            var titleColor = isLight ? '#1a2a3a' : '#e8eaf0';
+            var metaColor = isLight ? '#5a7080' : '#7a8ba0';
+            var hoverBg = isLight ? 'rgba(0,180,170,0.07)' : 'rgba(0,212,200,0.07)';
+
+            var frag = document.createDocumentFragment();
+            items.slice(0, 8).forEach(function (p) {
+                var a = document.createElement('a');
+                a.href = p.url;
+                a.style.cssText = 'display:flex;align-items:flex-start;gap:0.75rem;padding:0.75rem 1.25rem;text-decoration:none;border-bottom:1px solid rgba(128,128,128,0.07);transition:background 0.12s,outline 0.12s;border-radius:0;';
+                a.setAttribute('data-url', p.url);
+                a.innerHTML = '<i class="fa-solid fa-file-lines" style="color:#00d4c8;margin-top:3px;font-size:0.85rem;flex-shrink:0;"></i>'
+                    + '<div style="min-width:0;">'
+                    + '<div style="font-size:0.875rem;font-weight:600;color:' + titleColor + ';line-height:1.35;overflow-wrap:break-word;">' + p.title + '</div>'
+                    + '<div style="font-size:0.72rem;color:' + metaColor + ';margin-top:3px;overflow-wrap:break-word;">' + (p.cats || '📄') + (p.excerpt ? ' · ' + p.excerpt.substring(0, 70) + '…' : '') + '</div>'
+                    + '</div>';
+                a.addEventListener('mouseenter', function () { this.style.background = hoverBg; });
+                a.addEventListener('mouseleave', function () { if (resultLinks.indexOf(this) !== selectedIdx) this.style.background = ''; });
+                frag.appendChild(a);
+            });
+            results.appendChild(frag);
+            resultLinks = Array.from(results.querySelectorAll('a'));
+            selectedIdx = -1;
+        }
+
+        input.addEventListener('input', function () {
+            var q = this.value.trim().toLowerCase();
+            selectedIdx = -1;
+            if (!q) { results.innerHTML = ''; results.appendChild(empty); resultLinks = []; return; }
+            renderResults(posts.filter(function (p) {
+                return (p.title && p.title.toLowerCase().includes(q)) || (p.tags && p.tags.toLowerCase().includes(q)) || (p.cats && p.cats.toLowerCase().includes(q)) || (p.excerpt && p.excerpt.toLowerCase().includes(q));
+            }));
+        });
+
+        // FIX 4: Enter key navigates to highlighted result (or first result if none highlighted)
+        // Arrow keys navigate through results
+        input.addEventListener('keydown', function (e) {
+            if (!resultLinks.length) return;
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                selectedIdx = Math.min(selectedIdx + 1, resultLinks.length - 1);
+                highlight(selectedIdx);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                selectedIdx = Math.max(selectedIdx - 1, 0);
+                highlight(selectedIdx);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                var target = selectedIdx >= 0 ? resultLinks[selectedIdx] : resultLinks[0];
+                if (target) { window.location.href = target.getAttribute('data-url'); }
+            }
+        });
+
+        // Esc key / backdrop close
+        modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+        document.getElementById('search-close-kbd').addEventListener('click', closeModal);
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.style.display === 'flex') { e.stopPropagation(); closeModal(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); openModal(); }
+        });
+
+        // Wire up all search triggers
+        document.addEventListener('DOMContentLoaded', function () {
+            var sidebarBtn = document.getElementById('sidebar-search-input');
+            if (sidebarBtn) sidebarBtn.addEventListener('click', openModal);
+
+            var topbarSearch = document.getElementById('topbar-search-btn');
+            if (topbarSearch) topbarSearch.addEventListener('click', openModal);
+
+            var fab = document.getElementById('search-fab');
+            if (fab) fab.addEventListener('click', openModal);
+        });
+
+        // Observe theme changes so modal stays in sync
+        var themeObserver = new MutationObserver(function () {
+            if (modal.style.display === 'flex') applyTheme();
+        });
+        themeObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        // Expose globally
+        window.openSearchModal = openModal;
+    })();
+</script>

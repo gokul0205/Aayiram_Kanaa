@@ -1,0 +1,60 @@
+// =============================================================================
+// CHIRPY 2026 — Glassmorphism Mixins & Utilities
+// =============================================================================
+@import 'variables';
+
+// Glass panel mixin
+@mixin glass($bg: $sidebar-bg, $blur: $glass-blur, $border: $sidebar-border) {
+    background: $bg;
+    backdrop-filter: blur($blur) saturate(180%);
+    -webkit-backdrop-filter: blur($blur) saturate(180%);
+    border: 1px solid $border;
+    box-shadow: $glass-shadow, $glass-inset;
+}
+
+// Card glass
+@mixin glass-card($bg: $card-bg) {
+    @include glass($bg, $glass-blur-sm, $card-border);
+    border-radius: $card-radius;
+    transition: box-shadow $trans-base, transform $trans-base, background $trans-base;
+
+    &:hover {
+        box-shadow: 0 0 0 1px $card-hover-glow,
+            0 12px 48px rgba(0, 212, 200, 0.12),
+            $glass-shadow;
+        transform: translateY(-4px) scale(1.01);
+        background: $card-hover-bg;
+        border-color: rgba(0, 212, 200, 0.28);
+    }
+}
+
+// Glow text
+@mixin glow-text($color: $accent) {
+    color: $color;
+    text-shadow: 0 0 20px rgba(0, 212, 200, 0.5);
+}
+
+// Radial gradient background
+@mixin radial-bg {
+    background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0, 212, 200, 0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(0, 100, 180, 0.08) 0%, transparent 60%),
+        linear-gradient(135deg, $bg-deep 0%, $bg-teal 100%);
+    min-height: 100vh;
+}
+
+// Scrollbar
+@mixin custom-scrollbar {
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(0, 212, 200, 0.25);
+        border-radius: 2px;
+    }
+}

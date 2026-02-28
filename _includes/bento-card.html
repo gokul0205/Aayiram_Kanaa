@@ -1,0 +1,57 @@
+{% assign post = include.post %}
+{% assign cat = post.categories | first | downcase | default: "web" %}
+
+<a href="{{ post.url | relative_url }}" class="bento-card">
+
+    <!-- Thumbnail -->
+    <div class="card-thumb">
+        {% if post.image %}
+        <img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">
+        {% else %}
+        <div
+            style="width:100%;height:100%;background:linear-gradient(135deg,rgba(0,212,200,0.1) 0%,rgba(0,80,140,0.2) 100%);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(0,212,200,0.3);">
+            <i
+                class="fa-solid fa-{% if cat == 'ai' %}robot{% elsif cat == 'javascript' %}js{% else %}code{% endif %}"></i>
+        </div>
+        {% endif %}
+        <div class="thumb-overlay"></div>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+
+        <!-- Category -->
+        {% if post.categories %}
+        <span class="category-pill cat-{{ cat }}">{{ post.categories | first }}</span>
+        {% endif %}
+
+        <!-- Title -->
+        <h2 class="card-title">{{ post.title }}</h2>
+
+        <!-- Meta -->
+        <div class="card-meta">
+            <span>{{ post.author | default: site.author.name | split: " " | first }}</span>
+            <span class="dot">·</span>
+            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+            {% assign words = post.content | number_of_words %}
+            {% assign rt = words | divided_by: 200 | plus: 1 %}
+            <span class="dot">·</span>
+            <span>{{ rt }}m read</span>
+        </div>
+
+        <!-- Tags -->
+        {% if post.tags %}
+        <div class="card-tags">
+            {% for tag in post.tags limit:3 %}
+            <span class="tag-pill">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Excerpt -->
+        {% if post.excerpt %}
+        <p class="card-excerpt">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+        {% endif %}
+
+    </div>
+</a>

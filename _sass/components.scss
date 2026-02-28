@@ -1,0 +1,807 @@
+// =============================================================================
+// CHIRPY 2026 — Components
+// Cards, badges, TOC, progress bar, code blocks, tags, typography
+// =============================================================================
+@import 'variables';
+@import 'glassmorphism';
+
+// =========================================================
+// MIXIN: CATEGORY BADGE (must be declared before first use)
+// =========================================================
+@mixin category-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: $fs-xs;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.6rem;
+    border-radius: 100px;
+    background: $badge-web;
+    color: $accent;
+    border: 1px solid rgba(0, 212, 200, 0.18);
+    width: fit-content;
+
+    &.cat-ai {
+        background: $badge-ai;
+        color: #c084fc;
+        border-color: rgba(139, 92, 246, 0.25);
+    }
+
+    &.cat-js {
+        background: $badge-js;
+        color: $accent-amber;
+        border-color: rgba(245, 158, 11, 0.25);
+    }
+
+    &.cat-web {
+        background: $badge-web;
+        color: $accent;
+    }
+}
+
+// =========================================================
+// BENTO CARD
+// =========================================================
+.bento-card {
+    @include glass-card($card-bg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+
+    .card-thumb {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+        border-radius: $card-radius $card-radius 0 0;
+        display: block;
+        background: linear-gradient(135deg, #0a1a30 0%, #0d3050 100%);
+        overflow: hidden;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        &:hover img {
+            transform: scale(1.06);
+        }
+
+        .thumb-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(10, 15, 30, 0.8) 100%);
+        }
+    }
+
+    .card-body {
+        padding: 1rem 1.1rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        flex: 1;
+    }
+
+    .card-category {
+        @include category-badge();
+    }
+
+    .card-title {
+        font-family: $font-heading;
+        font-size: 0.975rem;
+        font-weight: 700;
+        line-height: 1.35;
+        color: $text-primary;
+        letter-spacing: -0.01em;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: $fs-xs;
+        color: $text-muted;
+        flex-wrap: wrap;
+
+        .dot {
+            color: $text-muted;
+        }
+    }
+
+    .card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.15rem;
+    }
+
+    .card-excerpt {
+        font-size: $fs-xs;
+        color: $text-secondary;
+        line-height: 1.55;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-top: 0.25rem;
+    }
+}
+
+// =========================================================
+// TAG / CATEGORY BADGES
+
+.tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    font-size: $fs-xs;
+    color: $text-muted;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 100px;
+    padding: 0.12rem 0.5rem;
+    text-decoration: none;
+    transition: all $trans-fast;
+
+    &:hover {
+        color: $accent;
+        background: $accent-muted;
+        border-color: rgba(0, 212, 200, 0.2);
+    }
+
+    &::before {
+        content: '#';
+        color: $text-muted;
+    }
+}
+
+.category-pill {
+    @include category-badge;
+}
+
+// =========================================================
+// READING PROGRESS BAR
+// =========================================================
+#reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, $accent, #00a8ff, $accent);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    z-index: $z-progress;
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 8px rgba(0, 212, 200, 0.5);
+    transition: width 0.1s linear;
+}
+
+#reading-progress-label {
+    position: fixed;
+    top: 8px;
+    right: 1rem;
+    z-index: $z-progress;
+    font-size: $fs-xs;
+    font-weight: 700;
+    color: $accent;
+    font-family: $font-mono;
+    background: rgba(0, 212, 200, 0.1);
+    border: 1px solid rgba(0, 212, 200, 0.2);
+    border-radius: 100px;
+    padding: 0.1rem 0.5rem;
+    backdrop-filter: blur(4px);
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+// =========================================================
+// TABLE OF CONTENTS (TOC)
+// =========================================================
+.toc-panel {
+    // Uniform glassmorphism style — no lopsided drop shadow
+    background: rgba(8, 16, 36, 0.72);
+    border: 1px solid rgba(0, 212, 200, 0.18);
+    border-radius: $card-radius;
+    // Symmetric glow on all sides (not just one side)
+    box-shadow:
+        0 0 0 1px rgba(0, 212, 200, 0.06),
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur($glass-blur);
+    -webkit-backdrop-filter: blur($glass-blur);
+
+    padding: 1.25rem;
+
+    // Truly sticky on desktop — sits under the topbar area (no topbar on desktop)
+    position: sticky;
+    top: 1.5rem;
+    max-height: calc(100vh - 3rem);
+    overflow-y: auto;
+    @include custom-scrollbar;
+    align-self: flex-start; // critical — prevents stretch in grid
+
+    .toc-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        h3 {
+            font-family: $font-heading;
+            font-size: $fs-sm;
+            font-weight: 700;
+            color: $text-primary;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .toc-toggle-btn {
+            background: none;
+            border: none;
+            color: $text-muted;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: color $trans-fast;
+
+            &:hover {
+                color: $accent;
+            }
+        }
+    }
+
+    #toc-list {
+        list-style: none;
+
+        li {
+            a {
+                display: block;
+                padding: 0.3rem 0.6rem;
+                border-radius: 6px;
+                font-size: $fs-xs;
+                color: $text-muted;
+                text-decoration: none;
+                border-left: 2px solid transparent;
+                transition: all $trans-fast;
+                line-height: 1.4;
+
+                &:hover {
+                    color: $text-secondary;
+                    background: rgba(0, 212, 200, 0.04);
+                    border-left-color: rgba(0, 212, 200, 0.3);
+                }
+
+                &.active {
+                    color: $accent;
+                    background: $accent-muted;
+                    border-left-color: $accent;
+                    font-weight: 600;
+                }
+            }
+
+            &.toc-h3 a {
+                padding-left: 1.1rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        &.collapsed {
+            display: none;
+        }
+    }
+
+    // On mobile: not sticky — sits inline at top of post
+    @media (max-width: $bp-desktop) {
+        position: relative;
+        top: auto;
+        max-height: none;
+        margin-bottom: 1.5rem;
+        align-self: auto;
+    }
+}
+
+// Light mode for TOC
+body.light-mode .toc-panel {
+    background: rgba(235, 245, 255, 0.92);
+    border-color: rgba(0, 180, 170, 0.22);
+    box-shadow:
+        0 0 0 1px rgba(0, 180, 170, 0.08),
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+
+// =========================================================
+// POST CONTENT TYPOGRAPHY
+// =========================================================
+.post-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(0, 212, 200, 0.1);
+
+    .post-category {
+        margin-bottom: 0.75rem;
+    }
+
+    h1.post-title {
+        font-family: $font-heading;
+        font-size: $fs-h1;
+        font-weight: 900;
+        line-height: 1.15;
+        letter-spacing: -0.03em;
+        color: $text-primary;
+        margin-bottom: 0.75rem;
+    }
+
+    .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        font-size: $fs-sm;
+        color: $text-muted;
+
+        span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .divider {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        .author-link {
+            color: $accent;
+            text-decoration: none;
+            font-weight: 600;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.post-body {
+    font-size: 1.05rem;
+    line-height: $lh-body;
+    color: $text-primary;
+
+    h2 {
+        font-family: $font-heading;
+        font-size: $fs-h2;
+        font-weight: 800;
+        color: $text-primary;
+        margin: 2.25rem 0 0.75rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(0, 212, 200, 0.1);
+        letter-spacing: -0.02em;
+
+        &::before {
+            content: '# ';
+            color: $accent;
+            opacity: 0.5;
+            font-weight: 400;
+        }
+    }
+
+    h3 {
+        font-family: $font-heading;
+        font-size: $fs-h3;
+        font-weight: 700;
+        color: $text-primary;
+        margin: 1.75rem 0 0.6rem;
+        letter-spacing: -0.01em;
+    }
+
+    p {
+        margin-bottom: 1.25rem;
+    }
+
+    a {
+        color: $accent;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+
+        &:hover {
+            color: $accent-hover;
+        }
+    }
+
+    ul,
+    ol {
+        margin: 0.75rem 0 1.25rem 1.5rem;
+
+        li {
+            margin-bottom: 0.35rem;
+        }
+    }
+
+    blockquote {
+        margin: 1.5rem 0;
+        padding: 1rem 1.25rem;
+        border-left: 3px solid $accent;
+        background: $accent-muted;
+        border-radius: 0 10px 10px 0;
+        color: $text-secondary;
+        font-style: italic;
+    }
+
+    // Inline image bento blocks
+    .post-image-block {
+        @include glass-card($card-bg);
+        margin: 1.75rem 0;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: $card-radius $card-radius 0 0;
+        }
+
+        .image-caption {
+            padding: 0.6rem 1rem;
+            font-size: $fs-xs;
+            color: $text-muted;
+            text-align: center;
+            border-top: 1px solid rgba(0, 212, 200, 0.08);
+        }
+    }
+
+    // Code blocks
+    .code-block {
+        margin: 1.5rem 0;
+        border-radius: $card-radius;
+        overflow: hidden;
+        border: 1px solid rgba(0, 212, 200, 0.12);
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.5rem 1rem;
+            font-size: $fs-xs;
+            color: $text-muted;
+            font-family: $font-mono;
+            border-bottom: 1px solid rgba(0, 212, 200, 0.08);
+
+            .lang-badge {
+                color: $accent;
+                font-weight: 600;
+            }
+
+            .copy-btn {
+                background: rgba(0, 212, 200, 0.08);
+                border: 1px solid rgba(0, 212, 200, 0.12);
+                border-radius: 6px;
+                color: $text-muted;
+                padding: 0.15rem 0.5rem;
+                font-size: $fs-xs;
+                cursor: pointer;
+                font-family: $font-body;
+                transition: all $trans-fast;
+
+                &:hover {
+                    color: $accent;
+                    border-color: rgba(0, 212, 200, 0.3);
+                }
+            }
+        }
+
+        pre {
+            margin: 0;
+            padding: 1.25rem 1rem;
+            background: rgba(5, 10, 20, 0.92) !important;
+            overflow-x: auto;
+            @include custom-scrollbar;
+        }
+
+        code {
+            font-family: $font-mono !important;
+            font-size: 0.875rem !important;
+            line-height: 1.7;
+        }
+    }
+
+    // Inline code
+    :not(pre)>code {
+        font-family: $font-mono;
+        font-size: 0.875em;
+        background: rgba(0, 212, 200, 0.08);
+        color: $accent;
+        padding: 0.1rem 0.4rem;
+        border-radius: 5px;
+        border: 1px solid rgba(0, 212, 200, 0.12);
+    }
+}
+
+// =========================================================
+// POST TAGS FOOTER
+// =========================================================
+.post-footer-tags {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 212, 200, 0.1);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .tags-label {
+        font-size: $fs-xs;
+        font-weight: 700;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-right: 0.25rem;
+    }
+}
+
+// =========================================================
+// SECTION HEADINGS
+// =========================================================
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+
+    h2 {
+        font-family: $font-heading;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: $text-primary;
+        letter-spacing: -0.02em;
+    }
+
+    .section-count {
+        font-size: $fs-xs;
+        color: $text-muted;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 100px;
+        padding: 0.1rem 0.5rem;
+    }
+
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(0, 212, 200, 0.2), transparent);
+    }
+}
+
+// =========================================================
+// TRANSITIONS & ANIMATIONS
+// =========================================================
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.5s ease both;
+}
+
+@for $i from 1 through 12 {
+    .bento-card:nth-child(#{$i}) {
+        animation: fadeInUp 0.5s ease #{($i - 1) * 0.06}s both;
+    }
+}
+
+// =========================================================
+// TAGS PAGE
+// =========================================================
+.tags-page {
+    .tags-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+
+        .tag-cloud-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            background: $card-bg;
+            border: 1px solid $card-border;
+            color: $text-secondary;
+            text-decoration: none;
+            font-size: $fs-sm;
+            font-weight: 500;
+            transition: all $trans-base;
+
+            .tag-count {
+                font-size: $fs-xs;
+                color: $text-muted;
+                background: rgba(255, 255, 255, 0.04);
+                border-radius: 100px;
+                padding: 0.05rem 0.4rem;
+            }
+
+            &:hover {
+                color: $accent;
+                border-color: rgba(0, 212, 200, 0.3);
+                background: $accent-muted;
+            }
+        }
+    }
+
+    .tagged-posts {
+        margin-top: 2.5rem;
+    }
+}
+
+// =========================================================
+// UTILITY
+// =========================================================
+.text-accent {
+    color: $accent;
+}
+
+.text-muted {
+    color: $text-muted;
+}
+
+.text-secondary {
+    color: $text-secondary;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+// =========================================================
+// RESPONSIVE FIXES — word-wrap, image overflow, mobile
+// =========================================================
+
+// Post body: always wrap text, never let it escape the column
+.post-body,
+.post-content,
+.post-layout article {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0; // critical for grid children to respect parent width
+    max-width: 100%;
+
+    // All images inside post body must scale down
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    // Code blocks: horizontal scroll only, never expand the page
+    pre {
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: pre;
+        word-break: normal;
+        word-wrap: normal;
+    }
+
+    // Tables
+    table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+    }
+}
+
+// Post hero image block
+.post-image-block {
+    max-width: 100%;
+    overflow: hidden;
+
+    img {
+        max-width: 100% !important;
+        width: 100% !important;
+        height: auto !important;
+        object-fit: cover;
+        border-radius: $card-radius $card-radius 0 0;
+    }
+}
+
+// Post layout grid — the wrapper must NOT have overflow:hidden (breaks sticky TOC)
+// Overflow is constrained only on the content column, not the grid container
+.post-layout {
+    // No overflow property here — required for position:sticky on TOC to work
+
+    .post-content {
+        min-width: 0;
+        overflow-x: clip; // 'clip' does not create a scroll container (unlike hidden)
+        max-width: 100%;
+    }
+}
+
+
+// Reading progress LABEL: hide on mobile so it doesn't overlap theme toggle
+// The bar itself is only 3px tall — perfectly fine to keep
+@media (max-width: $bp-tablet) {
+    #reading-progress-label {
+        display: none !important;
+    }
+}
+
+// Bento card thumbnails: always respect their container
+.card-thumb {
+    max-width: 100%;
+    overflow: hidden;
+
+    img {
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+// Hero heading — prevent overflow on small phones
+.hero-title {
+    overflow-wrap: break-word;
+    hyphens: auto;
+    max-width: 100%;
+}
+
+// Mobile post typography scale-down
+@media (max-width: $bp-tablet) {
+    .post-header h1.post-title {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        line-height: 1.25;
+    }
+
+    .post-body {
+        font-size: 0.97rem;
+
+        h2 {
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+
+        h3 {
+            font-size: clamp(1rem, 3.5vw, 1.25rem);
+        }
+    }
+
+    .hero-section h1 {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        line-height: 1.15;
+    }
+}

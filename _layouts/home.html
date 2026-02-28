@@ -1,0 +1,61 @@
+---
+layout: default
+---
+
+<!-- ======= HERO ======= -->
+<section class="hero-section fade-in-up">
+    <div class="hero-label">
+        <i class="fa-solid fa-bolt"></i>
+        Chirpy 2026 Dev Blog
+    </div>
+    <h1 class="hero-title">
+        Modern Web Dev<br>
+        <span class="accent-word">Redefined.</span> | Chirpy&nbsp;2026
+    </h1>
+    <p class="hero-subtitle">Building with Bento, Glassmorphism &amp; Liquid Surfaces</p>
+</section>
+
+<!-- ======= BENTO GRID ======= -->
+<section class="bento-section">
+    <div class="section-heading">
+        <h2>Latest Posts</h2>
+        <span class="section-count">{{ site.posts | size }} articles</span>
+    </div>
+
+    <div class="bento-grid">
+        {% for post in paginator.posts %}
+        {% include bento-card.html post=post %}
+        {% else %}
+        {% for post in site.posts %}
+        {% include bento-card.html post=post %}
+        {% endfor %}
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if paginator.total_pages > 1 %}
+    <nav class="pagination" aria-label="Pagination">
+        {% if paginator.previous_page %}
+        <a href="{{ paginator.previous_page_path | relative_url }}" aria-label="Previous">
+            <i class="fa-solid fa-chevron-left"></i>
+        </a>
+        {% endif %}
+
+        {% for page in (1..paginator.total_pages) %}
+        {% if page == paginator.page %}
+        <span class="current">{{ page }}</span>
+        {% else %}
+        <a
+            href="{% if page == 1 %}{{ '/' | relative_url }}{% else %}{{ site.paginate_path | replace: ':num', page | relative_url }}{% endif %}">{{
+            page }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if paginator.next_page %}
+        <a href="{{ paginator.next_page_path | relative_url }}" aria-label="Next">
+            <i class="fa-solid fa-chevron-right"></i>
+        </a>
+        {% endif %}
+    </nav>
+    {% endif %}
+</section>
