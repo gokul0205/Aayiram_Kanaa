@@ -7,15 +7,17 @@ permalink: /about/
 ## Hi there! 👋
 
 Welcome to **Aayiram Kanaa** — a blog about life, anime, data engineering, and everything in-between.
-I am Gokul a Data engineer by the day, a board-gamer and anime lover by the night. Life is quite mysterious like a billion faced dice.
+
+
+I am Gokul a data engineer by the day, a board-gamer and anime lover by the night. Life is quite mysterious like a billion faced dice.
 you can find me around the corner in a cafe with a cup of cold-brew trying to test the data in the pipeline and limit of my sanity through controlled experiments.
-Running towards protien sufficiency in my diet and data literacy. I can say more , but let my blogs give my impression. 
+Currently am running towards protien sufficiency in my diet and data literacy. I can say more , but I think I'll let my blogs give my impression. 
 Peace!
 
 ## What You'll Find Here
 
 - **Experiances** - Travel, Life, Introspection
-- **Data Engineering** — Pipelines, lakehouse architecture, real-time streaming
+- **Data Engineering** — Pipelines, Lakehouse architecture, ETL, ELT, Real-time streaming and batch processing, Unix
 - **AI & ML** —  RAG systems, LLM, GenAI
 
 ## Tech Stack
