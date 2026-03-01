@@ -16,7 +16,7 @@ Peace!
 
 ## What You'll Find Here
 
-- **Experiances** - Travel, Life, Introspection
+- **Experiences** - Travel, Life, Introspection
 - **Data Engineering** — Pipelines, Lakehouse architecture, ETL, ELT, Real-time streaming and batch processing, Unix
 - **AI & ML** —  RAG systems, LLM, GenAI
 
