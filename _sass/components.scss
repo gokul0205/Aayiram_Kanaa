@@ -145,7 +145,7 @@
     align-items: center;
     gap: 0.2rem;
     font-size: $fs-xs;
-    color: $text-muted;
+    color: $text-secondary;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 100px;
@@ -161,7 +161,7 @@
 
     &::before {
         content: '#';
-        color: $text-muted;
+        color: $text-secondary;
     }
 }
 
@@ -577,7 +577,7 @@ body.light-mode .toc-panel {
 
     .section-count {
         font-size: $fs-xs;
-        color: $text-muted;
+        color: $text-secondary;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: 100px;
@@ -804,4 +804,81 @@ body.light-mode .toc-panel {
         font-size: clamp(2rem, 8vw, 3.5rem);
         line-height: 1.15;
     }
+}
+
+// =========================================================
+// THEME PICKER (3-dot selector)
+// =========================================================
+.theme-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+
+    .picker-label {
+        font-size: $fs-xs;
+        color: $text-muted;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .picker-dots {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .theme-dot {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all $trans-fast;
+        outline: none;
+        position: relative;
+
+        &:hover {
+            transform: scale(1.15);
+        }
+
+        &.active {
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+        }
+
+        &[data-theme="dark"] {
+            background: linear-gradient(135deg, #0a0f1e, #1a2540);
+            box-shadow: inset 0 0 0 1px rgba(0, 212, 200, 0.35);
+        }
+
+        &[data-theme="light"] {
+            background: linear-gradient(135deg, #f0f4f8, #ddeaf7);
+            box-shadow: inset 0 0 0 1px rgba(0, 180, 170, 0.30);
+        }
+
+        &[data-theme="cyan-gold"] {
+            background: linear-gradient(135deg, #0a0f1e, #1a2540);
+            box-shadow: inset 0 0 0 1px rgba(245, 200, 66, 0.50);
+
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 3px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(245, 200, 66, 0.6) 0%, transparent 70%);
+            }
+        }
+    }
+}
+
+// Light mode override for active dot border
+body.light-mode .theme-dot.active {
+    border-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+// Topbar theme cycle button icon
+#topbar-theme-cycle {
+    font-size: 1rem;
 }

@@ -43,14 +43,17 @@
         <kbd class="search-shortcut">⌘K</kbd>
     </button>
 
-    <!-- Dark/Light Toggle -->
-    <div class="theme-toggle">
-        <span class="toggle-label">
-            <i class="fa-solid fa-moon" id="toggle-icon"></i>
-            <span id="toggle-text">Dark</span>
+    <!-- Theme Picker (3 themes) -->
+    <div class="theme-picker">
+        <span class="picker-label">
+            <i class="fa-solid fa-palette"></i>
+            Theme
         </span>
-        <div class="toggle-pill" id="theme-toggle-pill" role="switch" aria-checked="false" tabindex="0"
-            aria-label="Toggle light/dark mode"></div>
+        <div class="picker-dots">
+            <button class="theme-dot active" data-theme="dark" aria-label="Dark theme" title="Dark"></button>
+            <button class="theme-dot" data-theme="light" aria-label="Light theme" title="Light"></button>
+            <button class="theme-dot" data-theme="cyan-gold" aria-label="Cyan-Gold theme" title="Cyan-Gold"></button>
+        </div>
     </div>
 
 </nav>

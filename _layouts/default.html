@@ -35,6 +35,11 @@
 
 <body id="body" class="{% if site.theme_mode == 'light' %}light-mode{% endif %}">
 
+  {% if site.glass_theme.background_image and site.glass_theme.background_image != "" %}
+  <div class="glass-bg-image" id="glass-bg-image"
+    style="background-image: url('{{ site.glass_theme.background_image | relative_url }}'); display: none;"></div>
+  {% endif %}
+
   <div class="app-shell">
 
     <!-- ======= SIDEBAR (Desktop) ======= -->

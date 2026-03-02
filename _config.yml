@@ -23,6 +23,10 @@ hero:
 
 lang: en
 
+# Glass (Cyan-Gold) theme settings
+glass_theme:
+  background_image: ""   # e.g. "/assets/img/glass-bg.jpg" — shown at low opacity behind glass panels
+
 theme_mode: dark  # default: dark
 
 # Pagination
